@@ -1,11 +1,11 @@
 <ng-container *ngIf="title$ | async as title">
   <div class="bg-gray-500 p-5">
-    <ng-container *ngIf="appPageTitleBreadcrumb">
+    <ng-container  >
       <ng-container *ngIf="bc$ | async as _bc">
         <ng-container *ngIf="_bc.length > 0">
-          <ng-container>
+          <!-- <ng-container>
             <span class="h-20px border-gray-300 border-start mx-4"></span>
-          </ng-container>
+          </ng-container> -->
           <!--begin::Breadcrumb-->
 
           <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
@@ -13,7 +13,7 @@
               *ngFor="let bc of _bc"
               class="breadcrumb-item"
               [ngClass]="!bc.isSeparator && bc.isActive ? 'text-gray-900' : ''"
-              [ngClass]="!bc.isSeparator && !bc.isActive ? 'text-muted' : ''"
+              [ngClass]="!bc.isSeparator && !bc.isActive ? 'text-gray-600' : ''"
             >
               <ng-container *ngIf="!bc.isSeparator">
                 <a class="text-muted text-hover-primary" [routerLink]="bc.path">
@@ -34,7 +34,7 @@
 
     <h1 class="page-heading d-flex text-gray-900  fw-bold fs-3 my-0">
       {{ title }}
-      <ng-container *ngIf="appPageTitleDescription">
+      <ng-container  >
         <ng-container *ngIf="description$ | async as description">
           <!--begin::Description-->
           <span class="page-desc text-muted fs-7 fw-semibold">

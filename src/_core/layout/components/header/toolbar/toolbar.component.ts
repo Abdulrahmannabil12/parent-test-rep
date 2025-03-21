@@ -13,8 +13,6 @@ export class ToolbarComponent implements OnInit {
 
   private unsubscribe: Subscription[] = [];
 
-   @Input() appPageTitleBreadcrumb: boolean;
-   @Input() appPageTitleDescription: boolean;
 
   title$: Observable<string>;
   description$: Observable<string>;
@@ -26,6 +24,7 @@ export class ToolbarComponent implements OnInit {
     this.title$ = this.pageInfo.title.asObservable();
     this.description$ = this.pageInfo.description.asObservable();
     this.bc$ = this.pageInfo.breadcrumbs.asObservable();
+    this.pageInfo.breadcrumbs.asObservable().subscribe(res => console.log(res));
   }
 
   ngOnDestroy() {
