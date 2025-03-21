@@ -18,11 +18,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.pageInfo.setBreadcrumbs([
         {
           title: 'Home',
-          path: '/',
+          path: '/home',
+          isActive: false,
+        },
+        {
+          title: 'Admin',
+          path: '/admin',
           isActive: true,
         },
        ]);
-      this.pageInfo.setTitle("Home")
+      this.pageInfo.setTitle("dfsfsdf")
     }, 5);
   }
 
