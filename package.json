@@ -18,6 +18,14 @@
     "@angular/platform-browser": "^19.1.0",
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^18.0.0",
+    "@popperjs/core": "^2.11.8",
+    "angular-in-memory-web-api": "^0.19.0",
+    "bootstrap": "^5.3.3",
+    "crypto-js": "^4.2.0",
+    "jwt-decode": "^4.0.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.47",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -26,6 +34,9 @@
     "@angular-devkit/build-angular": "^19.1.5",
     "@angular/cli": "^18",
     "@angular/compiler-cli": "^19.1.0",
+    "@angular/localize": "^19.2.3",
+    "@types/bootstrap": "^5.2.6",
+    "@types/crypto-js": "^4.2.2",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
@@ -33,6 +44,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "sass": "^1.86.0",
     "typescript": "~5.7.2"
   }
 }
