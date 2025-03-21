@@ -1,0 +1,11 @@
+.footer {
+  margin-top: 0;
+  /* take available whitespace */
+  margin-bottom: -10px;
+  /* remove bottom whitespace */
+  padding-bottom: 5px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

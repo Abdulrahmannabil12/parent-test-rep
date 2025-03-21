@@ -12,12 +12,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/header/navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToolbarComponent } from './components/header/toolbar/toolbar.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    children: Routing, 
+    children: Routing,
   },
 ];
 
@@ -27,13 +28,14 @@ const routes: Routes = [
     HeaderComponent,
     ContentComponent,
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    ToolbarComponent
   ],
   imports: [
 
     CommonModule,
     RouterModule.forChild(routes),
-    NgbModule
+    NgbModule,
   ],
   exports: [RouterModule],
 })
