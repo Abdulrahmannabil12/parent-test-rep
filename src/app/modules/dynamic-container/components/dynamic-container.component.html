@@ -1,0 +1,129 @@
+<div class="card border-0">
+  <div
+    class="container m-0"
+    style="max-width: -moz-available; max-width: -webkit-fill-available"
+  >
+    <div
+      class="table-responsive angular-bootstrap-table"
+      #tableScroll
+      style="scroll-behavior: smooth !important"
+      appHorizontalScroll
+    >
+      <table
+        class="table table-head-custom table-curved table-vertical-center overflow-hidden p-2"
+        style="border-collapse: separate; border-spacing: 0px 10px"
+      >
+        <thead
+        
+        >
+          <th
+            class="cursor-pointer fw-normal text-gray-600 fs-5"
+            *ngFor="let col of columns"
+            [ngStyle]="{
+              'min-width.px': col.width
+                ? col.width * 10
+                : col.header.length > 2 && col.header.length < 8
+                ? col.header.length * 21
+                : col.header.length * 16
+            }"
+          >
+            {{ col.header }}
+          </th>
+          <th class="cursor-pointer fw-normal text-gray-600 fs-5 text-end pe-5">
+            Actions
+          </th>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of service?.items$ | async; let index = index">
+            <td
+              style="
+                font-weight: 500;
+                font-size: 1vw;
+                line-height: 20px;
+                text-align: start;
+                color: #525a6a;
+
+                padding-left: 1vw;
+              "
+              *ngFor="let field of columns"
+            >
+              <ng-container [ngSwitch]="field.type && field.type">
+                <ng-container *ngSwitchCase="'hasImage'">
+                  <ng-container [ngSwitch]="getItemField(item, field.field)">
+                    <img
+                      width="50px"
+                      height="50px"
+                      [src]="
+                        getItemField(item, field.image ? field.image : '') ||
+                        './assets/media/users/default.jpg'
+                      "
+                      class="rounded-circle"
+                    />
+                    {{ getItemField(item, field.field) }}
+                  </ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>{{
+                  !getItemField(item, field.field) ||
+                  getItemField(item, field.field) == "null"
+                    ? "-"
+                    : getItemField(item, field.field)
+                }}</ng-container>
+              </ng-container>
+            </td>
+            <td
+         class="d-flex row gap-2 justify-content-end"
+            >
+              <a
+                *ngIf="isDeletable"
+                [title]="'Delete ' + PageTitle"
+                class="btn btn-outline-primary  col-md-1 col-sm-2"
+                (click)="deleteItem(item.id)"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </a>
+              <a
+                *ngIf="isEditable"
+                [title]="'Edit ' + PageTitle"
+                class="btn btn-outline-primary   col-md-1 col-sm-2"
+                (click)="openAddEditDialog(true, item)"
+              >
+                <i class="fa-solid fa-pen"></i>
+              </a>
+
+              <a
+                *ngIf="isViewable"
+                [title]="'View ' + PageTitle"
+                class="btn btn-light  col-md-1 col-sm-2"
+                (click)="
+                  routerLinkRoute
+                    ? ViewRouter(routerLinkRoute, item)
+                    : View(item)
+                "
+              >
+                <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <tr
+        *ngIf="service?.items$ | async as items"
+        class="d-flex justify-content-center p-10 border-0"
+      >
+        <strong *ngIf="items.length === 0 && !isLoading" class="text-danger"
+          >No records yet !</strong
+        >
+      </tr>
+    </div>
+
+    <app-paginator
+      *ngIf="paginator"
+      class="d-flex justify-content-center align-items-center flex-wrap"
+      [paginator]="paginator"
+      [isLoading]="isLoading"
+      (paginate)="paginate($event)"
+    ></app-paginator>
+  </div>
+</div>

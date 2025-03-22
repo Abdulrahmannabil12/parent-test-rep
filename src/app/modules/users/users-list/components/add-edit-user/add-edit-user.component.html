@@ -1,0 +1,30 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">User update</h4>
+		<button type="button" class="btn-close" aria-label="Close"  (click)="closeModal()"></button>
+	</div>
+	<div class="modal-body">
+		<form [formGroup]="formGroup">
+			<div class="mb-3">
+				<label for="fullName" class="text-gray-700">Name</label>
+				<div class="input-group">
+				<input class="form-control" formControlName="fullName" type="text" placeholder="Name">
+
+				</div>
+			</div>
+      <div class="mb-3">
+				<label for="email" class="text-gray-700">Job Title</label>
+				<div class="input-group">
+				<input class="form-control" type="text" formControlName="email" placeholder="Job Title">
+
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-primary" (click)="closeModal()">cancel</button>
+		<button type="button" class="btn btn-primary" (click)="submit()" ngbAutofocus >Save</button>
+	</div>
+</ng-template>
+
+

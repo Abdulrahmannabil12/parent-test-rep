@@ -1,0 +1,14 @@
+<div>
+
+  <app-dynamic-container
+    *ngIf="userService"
+    [service]="userService"
+    [PageTitle]="'User'"
+    (openDialog)="onEditUser($event)"
+
+    [isViewable]="true"
+    [isEditable]="true"
+    [isDeletable]="true"
+  >
+  </app-dynamic-container>
+</div>

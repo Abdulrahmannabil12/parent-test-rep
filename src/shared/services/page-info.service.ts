@@ -24,7 +24,8 @@ export class PageInfoService {
   public breadcrumbs: BehaviorSubject<Array<PageLink>> = new BehaviorSubject<
     Array<PageLink>
   >([]);
-
+  public componentSubject: BehaviorSubject<string> = new BehaviorSubject<any>(null);
+  public componentDataSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor() { }
 
   public setTitle(_title: string) {
@@ -52,10 +53,22 @@ export class PageInfoService {
   }
 
 
+  get componentDataObservable() {
+    return this.componentDataSubject.asObservable();
   }
 
+  updateComponentDataSubject(data){
+    this.componentDataSubject.next(data);
+
+  }
+  setComponent(component: any, data?: any) {
+    this.componentSubject.next(component);
+    this.componentDataSubject.next(data);
+  }
+}
 
 
 
 
- 
+
+

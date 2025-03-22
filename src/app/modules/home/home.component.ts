@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageInfoService } from 'shared/services/page-info.service';
+import { CustomToolBarActions } from '../users/users-list/components/toolbarCustom.component';
 
 @Component({
   selector: 'app-home',
@@ -22,12 +23,14 @@ export class HomeComponent implements OnInit, OnDestroy {
           isActive: false,
         },
         {
-          title: 'Admin',
-          path: '/admin',
+          title: 'Dashboard',
+          path: '/users',
           isActive: true,
         },
        ]);
-      this.pageInfo.setTitle("dfsfsdf")
+      this.pageInfo.setTitle("Home");
+
+
     }, 5);
   }
 

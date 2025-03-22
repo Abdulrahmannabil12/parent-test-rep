@@ -1,5 +1,5 @@
 <ng-container *ngIf="title$ | async as title">
-  <div class="bg-gray-500 p-5">
+  <div class="bg-gray-500 p-5 d-flex flex-column">
     <ng-container>
       <ng-container *ngIf="bc$ | async as _bc">
         <ng-container *ngIf="_bc.length > 0">
@@ -12,16 +12,17 @@
             <li
               *ngFor="let bc of _bc"
               class="breadcrumb-item"
-              [ngClass]="!bc.isSeparator && bc.isActive ? 'text-gray-900' : ''"
+              [ngClass]="!bc.isSeparator && bc.isActive ? 'text-primary' : ''"
               [ngClass]="!bc.isSeparator && !bc.isActive ? 'text-gray-600' : ''"
             >
               <ng-container *ngIf="!bc.isSeparator">
                 <a
-                  class="text-muted text-hover-primary"
+                  class="text-primary text-hover-primary"
                   [routerLink]="bc.path"
                   [routerLinkActive]="bc.path"
                   #link="routerLinkActive"
-                  [style.text-decoration]="link.isActive?'none':'underline'"
+                  [style.text-decoration]="link.isActive ? 'none' : 'underline'"
+                  [style.pointer-events]="link.isActive ? 'none' : 'cursor'"
                 >
                   {{ bc.title }}
                 </a>
@@ -37,27 +38,34 @@
       </ng-container>
     </ng-container>
     <!-- begin::Title -->
+    <div class="d-flex row justify-content-between">
+      <h1
+        class="page-heading d-flex text-gray-900 fw-bold col-md-6 fs-2 mt-4 my-0"
+      >
+        {{ title }}
+        <ng-container>
+          <ng-container *ngIf="description$ | async as description">
+            <!--begin::Description-->
+            <span class="page-desc text-muted fs-7 fw-semibold">
+              <ng-container>
+                <!--begin::Separator-->
+                <span
+                  class="h-20px border-1 border-gray-300 border-start ms-3 mx-2"
+                ></span>
+                <!--end::Separator-->
+              </ng-container>
 
-    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-2 mt-4 my-0">
-      {{ title }}
-      <ng-container>
-        <ng-container *ngIf="description$ | async as description">
-          <!--begin::Description-->
-          <span class="page-desc text-muted fs-7 fw-semibold">
-            <ng-container>
-              <!--begin::Separator-->
-              <span
-                class="h-20px border-1 border-gray-300 border-start ms-3 mx-2"
-              ></span>
-              <!--end::Separator-->
-            </ng-container>
-
-            {{ description }}
-          </span>
-          <!--end::Description-->
+              {{ description }}
+            </span>
+            <!--end::Description-->
+          </ng-container>
         </ng-container>
-      </ng-container>
-    </h1>
+      </h1>
+
+      <div class="col-md-2">
+        <ng-container #childComponentContainer></ng-container>
+      </div>
+    </div>
     <!-- end::Title -->
   </div>
 </ng-container>

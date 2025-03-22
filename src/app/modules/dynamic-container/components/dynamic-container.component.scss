@@ -1,0 +1,40 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.mat-dialog-container {
+  padding: 0px !important;
+  display: contents !important;
+}
+.no-content-class {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-curved tr:hover td {
+  background-color: rgba(243, 248, 251, 255);
+}
+.table-curved tr:hover {
+  background-color: transparent !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0.729vw 1.458vw rgba(228, 229, 231, 255),
+    0 0.521vw 0.521vw rgba(228, 229, 231, 255) !important;
+}
+.table-curved tr {
+  background-color: white;
+  border-radius: 14px !important;
+
+  padding-left: 5em;
+}
+
+tbody td:first-child,
+tbody th:first-child {
+  border-radius: 14px 0 0 14px !important;
+}
+
+// Set border-radius on the top-right and bottom-right of the last table data on the table row
+tbody td:last-child,
+tbody th:last-child {
+  border-radius: 0 14px 14px 0 !important;
+}

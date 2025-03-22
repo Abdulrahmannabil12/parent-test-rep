@@ -7,9 +7,13 @@ const Routing: Routes = [
     children: [
       {
         path: 'home',
-        component:HomeComponent
+        component: HomeComponent
       },
-
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('../modules/users/users.module').then((m) => m.UserModule),
+      },
 
       {
         path: '',
@@ -17,7 +21,7 @@ const Routing: Routes = [
         pathMatch: 'full'  // Change to 'full' for an exact match
       },
     ]
-  }, 
+  },
 
 
 ];

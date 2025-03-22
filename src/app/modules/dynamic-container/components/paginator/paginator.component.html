@@ -1,0 +1,48 @@
+<!-- start: Paginator -->
+<div class="d-flex flex-wrap py-2 me-3">
+  <div class="d-flex align-items-center" *ngIf="isLoading">
+    <div class="me-2 text-muted">Loading...</div>
+    <div class="spinner spinner-primary me-10"></div>
+  </div>
+
+  <ng-pagination
+    *ngIf="!isLoading"
+    [collectionSize]="paginator.total_pages"
+    [(page)]="paginator.page"
+    [maxSize]="4"
+    [rotate]="true"
+    [boundaryLinks]="true"
+    [pageSize]="paginator.per_page"
+    (pageChange)="pageChange($event)"
+  ></ng-pagination>
+</div>
+<div class="d-flex align-items-center py-3">
+  <!-- begin: loading -->
+  <div class="d-flex align-items-center" *ngIf="isLoading">
+    <div class="me-2 text-muted">Loading...</div>
+    <div class="spinner spinner-primary me-10"></div>
+  </div>
+  <!-- end: loading -->
+
+  <!-- begin: pageSize -->
+  <!-- <mat-form-field
+  class="paginator-form"
+    appearance="outline"
+    style="width: 60px !important; margin-top: 1em !important"
+  >
+    <mat-select   [(ngModel)]="paginator.pageSize" (ngModelChange)="sizeChange()">
+      <mat-option class="paginator-form-options " [value]="ps" *ngFor="let ps of pageSizes">
+        {{ ps }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+  <span class="react-bootstrap-table-pagin ation-total"
+    >&nbsp; {{ paginator.page }} - &nbsp;{{
+      paginator.per_page
+    }}
+    of&nbsp;{{ paginator.total_pages }}</span
+  >
+  <!-- end: pageSize -->
+</div>
+<!-- end: Paginator -->
