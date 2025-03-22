@@ -1,7 +1,7 @@
 
 import { Component, effect, inject, Input, OnInit, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, catchError, delay, finalize, of, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, catchError, delay, finalize, Observable, of, Subscription, tap } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from 'shared/services/notification/notification.service';
 import { UserModel } from 'app/modules/users/models/user.model';
@@ -18,11 +18,14 @@ export class AddEditUserComponent implements OnInit {
   private modalService = inject(NgbModal);
   formGroup: FormGroup;
   isLoading = false;
+  isLoading$: Observable<boolean>;
+
   subscriptions: Subscription[] = [];
   constructor(public formBuilder: FormBuilder,
     public notify: NotificationService,
     private userService: UserService
   ) {
+    this.isLoading$ = this.userService.isLoading$;
 
   }
   ngOnInit(): void {
@@ -45,6 +48,7 @@ export class AddEditUserComponent implements OnInit {
 
 
 
+  get formControl() { return this.formGroup.controls; }
 
   setFormGroup(user: UserModel) {
     const fullName = user?.first_name && user?.last_name ? user.first_name + ' ' + user.last_name : '';
@@ -57,7 +61,7 @@ export class AddEditUserComponent implements OnInit {
         user.email,
         Validators.compose([
           Validators.required,
-          Validators.email,
+          //  Validators.pattern('^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
         ])
       ),
       fullName: new FormControl(
@@ -81,19 +85,7 @@ export class AddEditUserComponent implements OnInit {
 
   }
 
-  // helpers for View
-  isControlValid(controlName: string): boolean {
-    const control = this.formGroup.controls[controlName];
-    return control.valid && (control.dirty || control.touched);
-  }
-  controlHasError(validation: any, controlName: any): boolean {
-    const control = this.formGroup.controls[controlName];
-    return control.hasError(validation) && (control.dirty || control.touched);
-  }
 
-  controlHassError(): boolean {
-    return this.formGroup?.touched && this.formGroup?.invalid
-  }
 
   open() {
     this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' })
@@ -102,22 +94,28 @@ export class AddEditUserComponent implements OnInit {
     this.modalService.dismissAll()
   }
   submit() {
-    if (this.formGroup.invalid) return;
-    this.isLoading = true;
+
     if (!this.formGroup.value.id) {
       const sb = this.userService.create(this.formGroup.value).pipe(
         delay(1000),
         tap(() => this.closeModal()),
         catchError((err) => {
-
+          this.notify.showError('Create User Faild !','')
           return of(undefined);
         }),
         finalize(() => {
-          this.isLoading = false;
           this.modalService.dismissAll();
 
         })
-      ).subscribe();
+      ).subscribe((res)=>{
+        if(res){
+          this.notify.showSuccess('User Created Succesfully !', '')
+
+        }else{
+          this.notify.showError('Create User Faild !', '')
+
+        }
+      });
       this.subscriptions.push(sb);
     } else {
       const sb = this.userService.update(this.formGroup.value, this.formGroup.value.id).pipe(
@@ -132,7 +130,15 @@ export class AddEditUserComponent implements OnInit {
           this.modalService.dismissAll();
 
         })
-      ).subscribe();
+      ).subscribe((res)=>{
+        if (res) {
+          this.notify.showSuccess('User Updated Succesfully !', '')
+
+        } else {
+          this.notify.showError('Update User Faild !', '')
+
+        }
+      });
       this.subscriptions.push(sb);
     }
 

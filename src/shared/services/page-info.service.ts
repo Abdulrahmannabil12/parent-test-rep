@@ -17,9 +17,9 @@ export class PageInfo {
   providedIn: 'root',
 })
 export class PageInfoService {
-  public title: BehaviorSubject<string> = new BehaviorSubject<string>(
-    'Home'
-  );
+  public title: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  public activeToolbar: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(true);
   public description: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public breadcrumbs: BehaviorSubject<Array<PageLink>> = new BehaviorSubject<
     Array<PageLink>
@@ -41,6 +41,9 @@ export class PageInfoService {
   public setDescription(_title: string) {
     this.description.next(_title);
   }
+  public showToolBar(isActive:Boolean) {
+    this.activeToolbar.next(isActive);
+  }
 
   public updateDescription(_description: string) {
     setTimeout(() => {
@@ -51,7 +54,6 @@ export class PageInfoService {
   public setBreadcrumbs(_bs: Array<PageLink>) {
     this.breadcrumbs.next(_bs);
   }
-
 
   get componentDataObservable() {
     return this.componentDataSubject.asObservable();

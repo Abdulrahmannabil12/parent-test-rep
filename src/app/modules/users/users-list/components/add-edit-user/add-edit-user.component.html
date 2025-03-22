@@ -1,36 +1,100 @@
 <ng-template #content let-modal>
-    <ng-container *ngIf="isLoading">
+  <ng-container *ngIf="isLoading">
     <div class="progress progress-modal">
-      <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
-        style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      <div
+        class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+        role="progressbar"
+        style="width: 100%"
+        aria-valuenow="100"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      ></div>
     </div>
   </ng-container>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">User update</h4>
-		<button type="button" class="btn-close" aria-label="Close"  (click)="closeModal()"></button>
-	</div>
-	<div class="modal-body">
-		<form *ngIf="formGroup" [formGroup]="formGroup">
-			<div class="mb-3">
-				<label for="fullName" class="text-gray-700">Name</label>
-				<div class="input-group">
-				<input class="form-control" formControlName="fullName" type="text" placeholder="Name">
-
-				</div>
-			</div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">User update</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="closeModal()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form *ngIf="formGroup" [formGroup]="formGroup" >
       <div class="mb-3">
-				<label for="email" class="text-gray-700">Job Title</label>
-				<div class="input-group">
-				<input class="form-control" type="text" formControlName="email" placeholder="Job Title">
+        <label for="fullName" class="text-gray-700">Name</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            formControlName="fullName"
+            type="text"
+            placeholder="Name"
+               [ngClass]="{
+              'is-invalid': formControl.fullName.touched && formControl.fullName.errors,
 
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="modal-footer d-flex justify-content-center gap-2">
-		<button type="button" class="btn btn-outline-primary col-md-4 rounded-btn " (click)="closeModal()">cancel</button>
-		<button type="button" class="btn btn-primary col-md-4 rounded-btn " (click)="submit()" ngbAutofocus >Save</button>
-	</div>
+            }"
+          />
+          <div
+            *ngIf="formControl.fullName.touched && formControl.fullName.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControl.fullName.errors.required">
+              fullName is required!
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="text-gray-700">Job Title</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="email"
+            placeholder="Job Title"
+               [ngClass]="{
+              'is-invalid': formControl.email.touched && formControl.email.errors,
+
+            }"
+          />
+          <div
+            *ngIf="formControl.email.touched && formControl.email.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="formControl.email.errors.required">
+              Job is required!
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer d-flex justify-content-center gap-2">
+    <button
+      type="button"
+      class="btn btn-outline-primary col-md-4 rounded-btn"
+      (click)="closeModal()"
+    >
+      cancel
+    </button>
+
+    <button
+      type="submit"
+      (click)="submit()"
+      [disabled]="formGroup.invalid"
+      class="btn btn-primary rounded-btn w-50"
+    >
+      <ng-container *ngIf="isLoading$ | async">
+        <span class="indicator-progress" [style.display]="'block'">
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </ng-container>
+      <ng-container *ngIf="(isLoading$ | async) === false">
+        <span class="indicator-label">Save</span>
+      </ng-container>
+    </button>
+  </div>
 </ng-template>
-
-

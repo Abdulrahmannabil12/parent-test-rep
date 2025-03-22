@@ -8,7 +8,7 @@ import { EncrDecrService } from '../encryption-decryption.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SessionService { 
+export class SessionService {
   private readonly _token = 'to___k';
   private readonly _userName = 'u____n';
   private readonly _userId = 'u____D';
@@ -26,7 +26,7 @@ export class SessionService {
   getToken(): string {
     return this.getValue(this._token);
   }
- 
+
   setProfileImage(value: string): void {
     this.setValue(this._profileImage, value);
   }
@@ -43,7 +43,7 @@ export class SessionService {
   }
   setUserId(value: string): void {
     this.setValue(this._userId, value);
-  } 
+  }
   setUserType(value: string): void {
     this.setValue(this._userId, value);
   }
@@ -75,7 +75,7 @@ export class SessionService {
       case this._userName:
         this.setLocalValue(this._userName, value);
         break;
-      case this._userData: 
+      case this._userData:
         this.setLocalValue(this._userData, value);
         break;
       case this._email:
@@ -95,7 +95,7 @@ export class SessionService {
   }
 
   private getValue(key: string): any {
-    const val:any = localStorage.getItem(key); 
+    const val:any = localStorage.getItem(key);
     if (val && !IsNullOrEmptyString(val)) {
       return this.encrDecrService.get(val);
     }

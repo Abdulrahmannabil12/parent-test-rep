@@ -3,7 +3,7 @@ import { UserService } from '../services/user.service';
 import { PageInfoService } from 'shared/services/page-info.service';
 import { CustomToolBarActions } from './components/toolbarCustom.component';
 import { UserModel } from '../models/user.model';
-import { BehaviorSubject } from 'rxjs';
+import { NotificationService } from 'shared/services/notification/notification.service';
 
 @Component({
   selector: 'app-users-list',
@@ -13,7 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UsersListComponent implements OnInit {
 
-  constructor(public userService: UserService, private pageInfo: PageInfoService) { }
+  constructor(public userService: UserService, private pageInfo: PageInfoService,private notify:NotificationService) { }
 
   ngOnInit(): void {
     this.pageInfo.setBreadcrumbs([
@@ -24,9 +24,10 @@ export class UsersListComponent implements OnInit {
       },
       {
         title: 'Dashboard',
-        path: '/users',
+        path: '/dashboard',
         isActive: true,
       },
+
     ]);
     this.pageInfo.setTitle("User List");
     this.pageInfo.setComponent(CustomToolBarActions);
@@ -56,8 +57,18 @@ export class UsersListComponent implements OnInit {
       }
     )
   }
+  onDeleteUser(event) {
+
+  if(event.isDeleted){
+    this.notify.showSuccess('User Deleted Succesfully !', '')
+  }else{
+    this.notify.showError('Create Delete Faild !', '')
+
+  }
+  }
 
   ngOnDestroy(): void {
+    this.pageInfo.setBreadcrumbs([]);
     this.pageInfo.setComponent(null);
 
   }

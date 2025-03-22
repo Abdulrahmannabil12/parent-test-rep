@@ -19,6 +19,7 @@ export class NotificationService {
   }
 
   showError(message: string, title: string) {
+    console.log(this.toastr)
     this.toastr.error(message, title);
   }
 

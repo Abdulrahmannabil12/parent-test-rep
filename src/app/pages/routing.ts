@@ -1,14 +1,23 @@
-import { Routes } from '@angular/router';
+import { Routes, CanActivate } from '@angular/router';
+import { AuthGuard } from 'app/modules/auth/services/guards/auth.guard';
 import { HomeComponent } from 'app/modules/home/home.component';
 
 const Routing: Routes = [
+
   {
-    path: '',
+    path:'auth',
+    loadChildren: () =>
+      import('../modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'dashboard',
+    canActivate: [AuthGuard],
     children: [
-      {
-        path: 'home',
-        component: HomeComponent
-      },
+
       {
         path: 'users',
         loadChildren: () =>
@@ -17,13 +26,18 @@ const Routing: Routes = [
 
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'users',
         pathMatch: 'full'  // Change to 'full' for an exact match
       },
     ]
   },
 
 
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'  // Change to 'full' for an exact match
+  },
 ];
 
 

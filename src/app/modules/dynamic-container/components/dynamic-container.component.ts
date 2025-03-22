@@ -44,9 +44,11 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
   @Input()
   columns: { header: string; field: string, type?: string, width?: number, image?: string, dataSourceApi?: string, keyExpr?: string, valueExpr?: string, dataSourceEnum?: any }[] = [];
 
-  @Output() openDialog: EventEmitter<{ isEdit: boolean; isShow: boolean;  item: T }> = new EventEmitter();
+  @Output() openDialog: EventEmitter<{ isEdit: boolean; isShow: boolean; item: T }> = new EventEmitter();
 
   @Output() onView: EventEmitter<{ item: T }> = new EventEmitter();
+
+  @Output() onDelete: EventEmitter<{ isDeleted: Boolean }> = new EventEmitter();
 
   @Output() deleteEventEmitter: EventEmitter<any> = new EventEmitter();
 
@@ -65,7 +67,7 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
 
   ngOnInit(): void {
     if (this.serviceIsNotEmpty) {
-      this.service.fetch( );
+      this.service.fetch();
       this.paginator = this.service.paginator;
       const sb = this.service.isLoading$.subscribe(
         (res: boolean | undefined) => (this.isLoading = res)
@@ -79,7 +81,7 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
 
   View(item: T) {
 
-    this.onView.emit({  item });
+    this.onView.emit({ item });
   }
 
   getItemField(item: any, field: string) {
@@ -111,8 +113,11 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
     modalRef.componentInstance.id = id;
     this.setDefaultValues(modalRef);
     modalRef.result.then(
-      () => this.service.fetch(),
-      () => { }
+      (result) => {
+        this.onDelete.emit({ isDeleted: result })
+        this.service.fetch()
+      },
+      () => {  }
     );
   }
 
@@ -122,7 +127,7 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
   openAddEditDialog(isEdit = false, item: T): void {
     console.log(item)
 
-    this.openDialog.emit({ isEdit,  isShow: false,   item });
+    this.openDialog.emit({ isEdit, isShow: false, item });
   }
 
 

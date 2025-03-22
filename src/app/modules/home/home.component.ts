@@ -16,18 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.pageInfo.setBreadcrumbs([
-        {
-          title: 'Home',
-          path: '/home',
-          isActive: false,
-        },
-        {
-          title: 'Dashboard',
-          path: '/users',
-          isActive: true,
-        },
-       ]);
+   
       this.pageInfo.setTitle("Home");
 
 

@@ -1,0 +1,83 @@
+<header class="jumbotron" style="padding: 2%">
+  <h3 class="text-start">Welcome Back!</h3>
+  <h6 class="text-start text-muted">
+    Please login to access your
+    <span class="text-primary">Space</span> Dashboard
+  </h6>
+</header>
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <div class="col-lg d-flex flex-column gap-3">
+      <div class="col-lg">
+        <div class="form-group text-muted">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            [ngClass]="{
+              'is-invalid': f.email.touched && f.email.errors,
+
+            }"
+            formControlName="email"
+            id="email"
+            class="form-control"
+            placeholder="Email.."
+            required
+          />
+          <div
+            *ngIf="f.email.touched && f.email.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.email.errors.required">Email is required!</div>
+            <div *ngIf="f.email.errors.pattern">Enter Valid Email !</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-muted">
+        <label for="password">Password</label>
+        <input
+          type="text"
+          formControlName="password"
+          id="password"
+          class="form-control"
+          placeholder="Password"
+          [type]="'password'"
+          required
+          [ngClass]="{
+              'is-invalid': f.password.touched && f.password.errors,
+
+            }"
+        />
+        <div
+          *ngIf="f.password.touched && f.password.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.password.errors.required">Password is required!</div>
+        </div>
+      </div>
+      <div class="col-lg row justify-content-between">
+        <div class="form-group text-muted col-lg-4 align-content-center">
+          <span class="text-primary fs-6"> Forget Password ?</span>
+        </div>
+        <div class="form-group text-muted d-flex justify-content-end col-lg-5">
+          <button
+            type="submit"
+            [disabled]="loginForm.invalid"
+            class="btn btn-primary rounded-btn w-50"
+          >
+            <ng-container *ngIf="isLoading$ | async">
+              <span class="indicator-progress" [style.display]="'block'">
+           
+                <span
+                  class="spinner-border spinner-border-sm align-middle ms-2"
+                ></span>
+              </span>
+            </ng-container>
+            <ng-container *ngIf="(isLoading$ | async) === false">
+              <span class="indicator-label">Login</span>
+            </ng-container>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

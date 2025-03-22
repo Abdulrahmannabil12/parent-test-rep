@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
- 
+
 export const routes: Routes = [
 
   {
@@ -9,8 +9,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('../_core/layout/layout.module').then((m) => m.LayoutModule),
   },
-
-
   {
     path: '**',
     redirectTo: 'error/404',

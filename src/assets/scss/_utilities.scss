@@ -582,7 +582,8 @@ $utilities: map-merge(
       values: map-merge(
         $utilities-text-colors,
         (
-          "muted": var(--#{$prefix}secondary-color), // deprecated
+          "muted": var(--#{$prefix}muted),
+          // deprecated
           "black-50": rgba($black, .5), // deprecated
           "white-50": rgba($white, .5), // deprecated
           "body-secondary": var(--#{$prefix}secondary-color),

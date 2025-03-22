@@ -1,4 +1,4 @@
-<ng-container *ngIf="title$ | async as title">
+<ng-container *ngIf="(activeToolbar$|async) && title$ | async as title"  >
   <div class="bg-gray-500 p-5 d-flex flex-column" style="    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
     <ng-container>
       <ng-container *ngIf="bc$ | async as _bc">
@@ -63,7 +63,7 @@
       </h1>
 
       <div class="col-md-2">
-        <ng-container #childComponentContainer></ng-container>
+        <ng-template #childComponentContainer></ng-template>
       </div>
     </div>
     <!-- end::Title -->

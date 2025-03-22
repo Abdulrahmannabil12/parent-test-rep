@@ -1,0 +1,55 @@
+$tablet: "(max-width: 768px)";
+$color: #9ca5ab;
+
+
+section {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  height: 75vh;
+  width: 80vw;
+  justify-self: center;
+  border-radius: 14px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  @media ($tablet) {
+    grid-template-columns: 1fr;
+    grid-template-rows: autofill;
+  }
+
+  // left column
+  .left {
+    background-image: url(../../../assets/media/auth/bg.png);
+border-radius: inherit;
+    @media ($tablet) {
+      display: none;
+    }
+
+    .container {
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      h1 {
+        font-size: 30px;
+      }
+    }
+  }
+
+  // right column
+  .right {
+    background-color: white;
+border-radius: inherit;
+    .container { 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      h1 {
+        font-size: 30px;
+      }
+    }
+  }
+}
