@@ -13,6 +13,9 @@ import { UserModel } from '../models/user.model';
   providedIn: 'root',
 })
 export class UserService extends BaseTableService<UserModel> {
+
+  modalState$: BehaviorSubject<{ isOpened: boolean, isCreate: boolean,isEdit: boolean, isView: boolean, user: UserModel }> = new BehaviorSubject({ isOpened: false, isCreate: true, isEdit: false, isView: false, user: new UserModel() });
+
   url = '/';
   constructor(@Inject(HttpClient) http: HttpClient, notify: NotificationService, sessionService: SessionService) {
     super(http, notify, sessionService);

@@ -75,7 +75,7 @@ export abstract class BaseTableService<T> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
 
-    const url = `${this.API_URL}/${this.controller}/Insert`;
+    const url = `${this.API_URL}/${this.controller}/`;
     return this.http.post<BaseModel>(url, item).pipe(
       catchError((err) => {
         this._errorMessage.next(err);
@@ -134,11 +134,11 @@ export abstract class BaseTableService<T> {
     return this.http.get<ResponseData<T>>(`${this.controller}/GetById/${item}`);
   }
   // UPDATE
-  update(item: BaseModel): Observable<any> {
-    const url = `${this.API_URL}/${this.controller}/Update`;
+  update(item: BaseModel,id:number): Observable<any> {
+    const url = `${this.API_URL}/${this.controller}?id=${id}`;
     this._isLoading$.next(true);
     this._errorMessage.next('');
-    return this.http.post(url, item).pipe(
+    return this.http.put(url, item).pipe(
       catchError((err) => {
         this._errorMessage.next(err);
         return of(item);
@@ -171,9 +171,8 @@ export abstract class BaseTableService<T> {
   delete(id: any, controllerFun?: string): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
-    controllerFun = controllerFun ? controllerFun : 'Delete'
 
-    const url = `${this.API_URL}/${this.controller}/${controllerFun}?id=${id}`;
+    const url = `${this.API_URL}/${this.controller}?id=${id}`;
 
     return this.http.delete(url).pipe(
       catchError((err) => {

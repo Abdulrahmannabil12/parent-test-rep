@@ -8,6 +8,7 @@ import { AddEditUserComponent } from './users-list/components/add-edit-user/add-
 import { NgbDatepickerModule ,NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomToolBarActions } from './users-list/components/toolbarCustom.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ViewUserComponent } from './users-list/components/view-user/view-user.component';
 
 
 
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     UsersComponent,
     UsersListComponent,
     AddEditUserComponent,
+    ViewUserComponent,
     CustomToolBarActions
   ],
   imports: [

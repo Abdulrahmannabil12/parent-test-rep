@@ -14,7 +14,7 @@
         style="border-collapse: separate; border-spacing: 0px 10px"
       >
         <thead
-        
+
         >
           <th
             class="cursor-pointer fw-normal text-gray-600 fs-5"
@@ -96,10 +96,7 @@
                 *ngIf="isViewable"
                 [title]="'View ' + PageTitle"
                 class="btn btn-light  col-md-1 col-sm-2"
-                (click)="
-                  routerLinkRoute
-                    ? ViewRouter(routerLinkRoute, item)
-                    : View(item)
+                (click)="   View(item)
                 "
               >
                 <i class="fa-solid fa-chevron-right"></i>

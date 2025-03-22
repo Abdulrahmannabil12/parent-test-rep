@@ -1,10 +1,16 @@
 <ng-template #content let-modal>
+    <ng-container *ngIf="isLoading">
+    <div class="progress progress-modal">
+      <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+        style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </ng-container>
 	<div class="modal-header">
 		<h4 class="modal-title" id="modal-basic-title">User update</h4>
 		<button type="button" class="btn-close" aria-label="Close"  (click)="closeModal()"></button>
 	</div>
 	<div class="modal-body">
-		<form [formGroup]="formGroup">
+		<form  [formGroup]="formGroup">
 			<div class="mb-3">
 				<label for="fullName" class="text-gray-700">Name</label>
 				<div class="input-group">
@@ -21,9 +27,9 @@
 			</div>
 		</form>
 	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-primary" (click)="closeModal()">cancel</button>
-		<button type="button" class="btn btn-primary" (click)="submit()" ngbAutofocus >Save</button>
+	<div class="modal-footer d-flex justify-content-center gap-2">
+		<button type="button" class="btn btn-outline-primary col-md-4 rounded-btn " (click)="closeModal()">cancel</button>
+		<button type="button" class="btn btn-primary col-md-4 rounded-btn " (click)="submit()" ngbAutofocus >Save</button>
 	</div>
 </ng-template>
 

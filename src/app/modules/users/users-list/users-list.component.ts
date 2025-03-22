@@ -12,8 +12,8 @@ import { BehaviorSubject } from 'rxjs';
   standalone: false
 })
 export class UsersListComponent implements OnInit {
+
   constructor(public userService: UserService, private pageInfo: PageInfoService) { }
-  modalState$: BehaviorSubject<{ isOpened: boolean, isEdit: boolean, user: UserModel }> = new BehaviorSubject({ isOpened: false, isEdit: false, user: new UserModel() });
 
   ngOnInit(): void {
     this.pageInfo.setBreadcrumbs([
@@ -33,12 +33,30 @@ export class UsersListComponent implements OnInit {
 
   }
   onEditUser(event: { isEdit: boolean; isShow: boolean; item: UserModel }) {
-    this.pageInfo.updateComponentDataSubject({
-      isOpened: true,
-      user: event.item,
-      isEdit: event.isEdit
-    })
+    this.userService.modalState$.next(
+      {
+        isOpened: true,
+        isCreate: false,
+        isView: false,
+        user: event.item,
+        isEdit: event.isEdit
+      }
+    )
+
   }
+  onViewUser(event) {
+
+    this.userService.modalState$.next(
+      {
+        isOpened: true,
+        isCreate: false,
+        isView: true,
+        user: event.item,
+        isEdit:false
+      }
+    )
+  }
+
   ngOnDestroy(): void {
     this.pageInfo.setComponent(null);
 

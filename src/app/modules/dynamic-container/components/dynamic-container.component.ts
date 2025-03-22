@@ -43,53 +43,43 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
 
   @Input()
   columns: { header: string; field: string, type?: string, width?: number, image?: string, dataSourceApi?: string, keyExpr?: string, valueExpr?: string, dataSourceEnum?: any }[] = [];
+
   @Output() openDialog: EventEmitter<{ isEdit: boolean; isShow: boolean;  item: T }> = new EventEmitter();
+
+  @Output() onView: EventEmitter<{ item: T }> = new EventEmitter();
+
   @Output() deleteEventEmitter: EventEmitter<any> = new EventEmitter();
- 
+
   @Input()
   routerLinkRoute = '';
   @Input()
   routerLinkParam: string | Array<string>;
-
   dataSource = [] as T[];
   paginator: PaginatorState = {} as PaginatorState;
-
   isLoading?: boolean;
   private subscriptions: Subscription[] = [];
-
-
   get serviceIsNotEmpty(): boolean {
     return this.service && Object.keys(this.service).length > 0;
   }
-
   constructor(private fb: FormBuilder, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
-
     if (this.serviceIsNotEmpty) {
-
       this.service.fetch( );
       this.paginator = this.service.paginator;
-
       const sb = this.service.isLoading$.subscribe(
         (res: boolean | undefined) => (this.isLoading = res)
       );
-
       this.columns = this.service.getTableHeaderAndFields();
-
-
-
-      // this.service.items$.subscribe(res=>console.log(res))
     }
-
-
   }
 
   ngAfterViewInit() {
   }
 
   View(item: T) {
-    this.openDialog.emit({ isEdit: false,  isShow: true,  item });
+
+    this.onView.emit({  item });
   }
 
   getItemField(item: any, field: string) {
@@ -104,31 +94,6 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
     }
 
   }
-  ViewRouter(routerLink: string, item: any) {
-    let link;
-    let param: string = '';
-    if (Array.isArray(this.routerLinkParam)) {
-      this.routerLinkParam.forEach(paramSTR => {
-
-        if (paramSTR.includes('.')) {
-          const paramArr = paramSTR.split(".");
-          const parentItem = item[paramArr[0]]
-          param = param + '/' + parentItem[paramArr[1]]
-
-        } else {
-          param = param + '/' + item[paramSTR]
-
-        }
-      })
-    } else {
-      param = item[this.routerLinkParam]
-    }
-    link = routerLink + '/view/' + param;
-    this.router.navigate([link]);
-  }
-  // sorting
-
-
 
   // pagination
   paginate(pagination: PaginatorState) {
@@ -141,12 +106,6 @@ export class DynamicContainerComponent<T> implements OnInit, OnDestroy, AfterVie
     this.subscriptions.forEach((sb) => sb.unsubscribe());
   }
 
-
-
-
-
-  // actions
-  // these will run for all dynamic modules
   deleteItem(id: number) {
     const modalRef = this.modalService.open(DynamicDialogComponent);
     modalRef.componentInstance.id = id;
