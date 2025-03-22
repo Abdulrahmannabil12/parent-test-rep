@@ -25,8 +25,9 @@ export class ViewUserComponent implements OnInit {
 
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.userService.modalState$.subscribe(res => {
+
       if (res.isOpened && res.isView && !this.modalService.hasOpenModals()) {
         this.userData = res.user;
         this.open();
@@ -73,10 +74,14 @@ export class ViewUserComponent implements OnInit {
       }),
       finalize(() => {
         this.isLoading = false;
+        this.modalService.dismissAll();
+
       })
     ).subscribe();
     this.subscriptions.push(sb);
 
   }
-
+  ngOnDestroy(): void {
+    this.modalService.dismissAll();
+  }
 }

@@ -33,7 +33,7 @@ export class CustomToolBarActions implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.pageInfo.componentDataObservable.subscribe(res => {
 
-      if (res&&res.isOpened) {
+      if (res && res.isOpened) {
         this.userService.modalState$.next({ isOpened: true, isCreate: true, isEdit: true, isView: false, user: res.user })
 
       }
@@ -48,6 +48,7 @@ export class CustomToolBarActions implements OnInit, AfterViewInit, OnDestroy {
     this.userService.modalState$.next({ isOpened: true, isCreate: true, isEdit: false, isView: false, user: new UserModel() })
   }
   ngOnDestroy(): void {
+    this.userService.modalState$.next({ isOpened: false, isCreate: false, isEdit: false, isView: false, user: null })
 
   }
 

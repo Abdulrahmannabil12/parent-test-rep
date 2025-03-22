@@ -117,11 +117,11 @@ export abstract class BaseTableService<T> {
       })
     );
   }
-  getItemById(id: number): Observable<BaseModel> {
+  getItemById(id: number): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
-    const url = `${this.API_URL}/${this.controller}/GetById?Id=${id}`;
-    return this.http.get<BaseModel>(url).pipe(
+    const url = `${this.API_URL}/${this.controller}?id=${id}`;
+    return this.http.get<any>(url).pipe(
       catchError((err) => {
         this._errorMessage.next(err);
         return of({ id: undefined });
@@ -129,13 +129,10 @@ export abstract class BaseTableService<T> {
       finalize(() => this._isLoading$.next(false))
     );
   }
-  getById(obj: T, idField = 'id'): Observable<ResponseData<T>> {
-    const item = (obj as any)[idField];
-    return this.http.get<ResponseData<T>>(`${this.controller}/GetById/${item}`);
-  }
+
   // UPDATE
   update(item: BaseModel,id:number): Observable<any> {
-    const url = `${this.API_URL}/${this.controller}?id=${id}`;
+    const url = `${this.API_URL}/${this.controller}/${id}`;
     this._isLoading$.next(true);
     this._errorMessage.next('');
     return this.http.put(url, item).pipe(

@@ -10,7 +10,7 @@
 		<button type="button" class="btn-close" aria-label="Close"  (click)="closeModal()"></button>
 	</div>
 	<div class="modal-body">
-		<form  [formGroup]="formGroup">
+		<form *ngIf="formGroup" [formGroup]="formGroup">
 			<div class="mb-3">
 				<label for="fullName" class="text-gray-700">Name</label>
 				<div class="input-group">

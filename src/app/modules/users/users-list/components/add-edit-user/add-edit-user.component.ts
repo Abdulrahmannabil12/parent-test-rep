@@ -30,7 +30,15 @@ export class AddEditUserComponent implements OnInit {
 
       if (res.isOpened && !this.modalService.hasOpenModals()) {
         this.open();
-        this.setFormGroup(res.user || new UserModel())
+        if (res.user.id) {
+          this.userService.getItemById(res.user.id).subscribe(response => {
+            this.setFormGroup(response.data)
+          });
+        } else {
+          this.setFormGroup(new UserModel())
+
+        }
+
       }
     })
   }
@@ -56,8 +64,6 @@ export class AddEditUserComponent implements OnInit {
         fullName,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(100),
         ])
       ),
       first_name: new FormControl(
@@ -96,7 +102,7 @@ export class AddEditUserComponent implements OnInit {
     this.modalService.dismissAll()
   }
   submit() {
-    if (!this.formGroup.invalid) return;
+    if (this.formGroup.invalid) return;
     this.isLoading = true;
     if (!this.formGroup.value.id) {
       const sb = this.userService.create(this.formGroup.value).pipe(
@@ -108,6 +114,8 @@ export class AddEditUserComponent implements OnInit {
         }),
         finalize(() => {
           this.isLoading = false;
+          this.modalService.dismissAll();
+
         })
       ).subscribe();
       this.subscriptions.push(sb);
@@ -121,11 +129,15 @@ export class AddEditUserComponent implements OnInit {
         }),
         finalize(() => {
           this.isLoading = false;
+          this.modalService.dismissAll();
+
         })
       ).subscribe();
       this.subscriptions.push(sb);
     }
 
   }
-
+  ngOnDestroy(): void {
+    this.modalService.dismissAll();
+  }
 }
