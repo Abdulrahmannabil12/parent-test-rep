@@ -22,7 +22,7 @@ import { ViewUserComponent } from './users-list/components/view-user/view-user.c
   ],
   imports: [
     CommonModule,
-    UserRoutingModule,
+    UserRoutingModule, 
     DynamicContainerModule,
     NgbModule,
     NgbDatepickerModule,

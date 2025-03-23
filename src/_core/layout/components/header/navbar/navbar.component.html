@@ -28,7 +28,7 @@
           >Home
         </a>
       </li>
-         <li class="nav-item">
+      <li class="nav-item" *ngIf="isLoggedIn$ | async">
         <a
           class="nav-link"
           routerLink="/dashboard"
@@ -45,15 +45,15 @@
       </li>
       <li class="nav-item">
         @if ((isLoggedIn$|async)) {
-        <button
-          class="btn btn-lg btn-primary rounded-btn"
-          (click)="logOut()"
-        >
+        <button class="btn btn-lg btn-primary rounded-btn" (click)="logOut()">
           Logout
         </button>
 
         }@else{
-        <button class="btn btn-lg btn-primary rounded-btn" (click)="redirectLogin()">
+        <button
+          class="btn btn-lg btn-primary rounded-btn"
+          (click)="redirectLogin()"
+        >
           login
         </button>
 

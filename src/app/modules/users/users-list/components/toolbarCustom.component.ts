@@ -12,7 +12,6 @@ import { UserService } from '../../services/user.service';
      <button class="btn btn-primary rounded-btn fw-semibold px-5 fs-4" (click)="createNewUser()">
         <i class="fa fa-plus" aria-hidden="true"></i> New User
       </button>
-      <app-add-edit-user ></app-add-edit-user>
 
    </ng-container>
 

@@ -1,11 +1,10 @@
 import { jwtDecode } from 'jwt-decode';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ComponentFactoryResolver, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs';
+import { HttpClient} from '@angular/common/http';
+import {Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { catchError, finalize, map, switchMap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
-import { ObjectHasValue } from 'shared/helper/helper';
 import { AuthHttpService } from '../API/http.service';
 import { SessionService } from '../LocalStorage/session.service';
 
@@ -22,8 +21,7 @@ export class BaseAuthService extends AuthHttpService {
   ];
   isLoadingSubject: BehaviorSubject<boolean>;
   currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public stopTimerSrc = new Subject<any>();
-  public stopTimer$ = this.stopTimerSrc.asObservable();
+
   get isLoading$() {
     return this.isLoadingSubject.asObservable();
   }
